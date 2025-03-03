@@ -189,7 +189,7 @@ export class UsersService {
       },
     );
 
-    return await this.userModel.softDelete({ _id: id });
+   return await this.userModel.softDelete({ _id: id });
   }
 
   isValidPassword(password: string, hash: string) {

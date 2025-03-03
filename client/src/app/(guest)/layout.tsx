@@ -1,3 +1,4 @@
+import AppFooter from '@/components/Footer/app.footer';
 import NextAuthWrapper from '@/lib/next.auth.wrapper';
 
 const DRAWER_WIDTH = 240;

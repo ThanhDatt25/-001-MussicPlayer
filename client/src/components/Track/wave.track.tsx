@@ -218,24 +218,46 @@ const WaveTrack = (props: IProps) => {
             <div style={{ marginTop: 20 }}>
                 <div
                     style={{
-                        display: "flex",
+                        display: "",
                         gap: 15,
                         padding: 20,
-                        height: 400,
-                        background: "#121212"
+                        background: "#121212",
+                        height: 500
                     }}
                 >
-                    <div className="left"
-                        style={{
-                            width: "100%",
-                            height: "calc(100% - 10px)",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between"
-                        }}
-                    >
-                        <div className="info" style={{ display: "flex" }}>
-                            <div>
+                    <div className="right flex">
+                        {track?.photo ? (
+                            <img
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_PUBLIC}${track?.photo}`}
+                                alt={"track"}
+                                className="w-[250px] h-[250px]"
+                            />
+                        ) : (
+                            <div style={{
+                                background: "#ccc",
+                                width: 250,
+                                height: 250
+                            }}>
+                            </div>
+                        )}
+                        <div className="text-white ml-10 mt-[50px]">
+                            Song
+                            <div className="text-6xl font-bold my-5">{track.title}</div>
+                            <div className="flex">
+                                <img
+                                    className={'w-[30px] rounded-full mr-2'}
+                                    src={track?.user?.avatar !== '' && track?.user?.avatar !== null ?
+                                        `${process.env.NEXT_PUBLIC_BACKEND_PUBLIC}${track?.user?.avatar}` :
+                                        "avatars-000184820148-9xr49w-t240x240.jpg"}
+                                    alt="sa"
+                                />
+                                <div className="items-center flex">{track?.user?.name}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="left">
+                        <div className="info flex">
+                            <div className="flex">
                                 <div
                                     onClick={() => {
                                         onPlayClick();
@@ -244,45 +266,13 @@ const WaveTrack = (props: IProps) => {
                                             setCurrentTrack({ ...currentTrack, isPlaying: false })
                                         }
                                     }}
-                                    style={{
-                                        borderRadius: "50%",
-                                        background: "#f50",
-                                        height: "50px",
-                                        width: "50px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        cursor: "pointer"
-                                    }}
+                                    className="rounded-[50%] bg-[#1ed760] h-[50px] w-[50px] flex items-center justify-center hover:cursor-pointer mt-10 mb-5"
                                 >
                                     {isPlaying === true ?
-                                        <div className="text-white"><Pause /></div>
+                                        <div className="text-black"><Pause /></div>
                                         :
-                                        <div className="text-white"><Play /></div>
+                                        <div className="text-black"><Play /></div>
                                     }
-                                </div>
-                            </div>
-                            <div style={{ marginLeft: 20 }}>
-                                <div style={{
-                                    maxWidth: "35rem",
-                                    padding: "0 5px",
-                                    background: "#333",
-                                    fontSize: 25,
-                                    width: "fit-content",
-                                    color: "white"
-                                }}>
-                                    {track.title}
-                                </div>
-                                <div style={{
-                                    padding: "0 5px",
-                                    marginTop: 10,
-                                    background: "#333",
-                                    fontSize: 20,
-                                    width: "fit-content",
-                                    color: "white"
-                                }}
-                                >
-                                    {track?.user?.name}
                                 </div>
                             </div>
                         </div>
@@ -295,7 +285,6 @@ const WaveTrack = (props: IProps) => {
                                     isReady && comments.map((comment) => {
                                         return (
                                             <div key={`id=${comment._id}`} className="relative group">
-                                                {/* Image with Tooltip */}
                                                 <img
                                                     className={`${isReady && 'img-comments'}`}
                                                     onPointerMove={(e) => {
@@ -311,8 +300,7 @@ const WaveTrack = (props: IProps) => {
                                                         left: calLeft(comment.moment, durationTrack)
                                                     }}
                                                 />
-                                                {/* Tooltip */}
-                                                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-max bg-gray-700 text-white text-sm p-2 rounded-md">
+                                                <div className="absolute left-0 mb-2 hidden group-hover:block w-max bg-gray-700 text-white text-sm p-2 rounded-md">
                                                     {comment?.commentText}
                                                 </div>
                                             </div>
@@ -322,28 +310,6 @@ const WaveTrack = (props: IProps) => {
                             </div>
                             <div className={`${isReady && 'overlay-wave'}`}></div>
                         </div>
-                    </div>
-                    <div className="right"
-                    >
-                        {track?.photo ? (
-                            <img
-                                src={`${process.env.NEXT_PUBLIC_BACKEND_PUBLIC}${track?.photo}`}
-                                alt={"track"}
-                                style={{
-                                    minWidth: '100%',
-                                    width: 160,
-                                    height: 150,
-                                    borderRadius: '10%'
-                                }}
-                            />
-                        ) : (
-                            <div style={{
-                                background: "#ccc",
-                                width: 250,
-                                height: 250
-                            }}>
-                            </div>
-                        )}
                     </div>
                 </div>
                 <LikeTrack track={track} isFollow={props?.isFollow} />

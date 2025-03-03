@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { sendRequest } from '@/utils/api';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Heart, Flame, Play } from 'lucide-react';
+import { Heart, Flame, Play, HeartOff } from 'lucide-react';
 interface IProps {
     track: ITrack | null;
     isFollow: boolean;
@@ -14,7 +14,7 @@ const LikeTrack = (props: IProps) => {
     const { data: session } = useSession();
     const [like, setLike] = useState<boolean>(false);
     const router = useRouter();
-
+    const [isLike, setIsLike] = useState<boolean>(false);
     const fetchData = async () => {
         if (session?.access_token) {
             const res2 = await sendRequest<IBackendRes<ILike>>({
@@ -35,6 +35,7 @@ const LikeTrack = (props: IProps) => {
     }, [session])
 
     const handleLikeTrack = async () => {
+        setIsLike(!isLike);
         await sendRequest<IBackendRes<ITrack>>({
             url: `${process.env.NEXT_PUBLIC_BACKEND_URL}likes`,
             method: "POST",
@@ -89,15 +90,23 @@ const LikeTrack = (props: IProps) => {
     }
 
     return (
-        <div className='flex space-x-4'>
-            <Heart
-                onClick={() => handleLikeTrack()}
-                className='text-white ml-10'
-            />
+        <div className='flex space-x-4 mt-20 ml-[40px]'>
+            {
+                isLike == false ?
+                    <Heart
+                        onClick={() => handleLikeTrack()}
+                        className='text-white ml-10 hover:cursor-pointer hover:text-[#ddd]'
+                    />
+                    :
+                    <Heart
+                        onClick={() => handleLikeTrack()}
+                        className='text-red-500 ml-10 hover:cursor-pointer hover:text-red-700'
+                    />
+            }
             <div style={{ display: "flex", gap: "20px", color: "#999" }}>
                 <Flame
                     onClick={() => handleFollow()}
-                    className='text-white'
+                    className='text-white hover:text-[#ddd] hover:cursor-pointer'
                 />
                 <span style={{ display: "flex", alignItems: "center" }}><Play /> {track?.view}</span>
                 <span style={{ display: "flex", alignItems: "center" }}><Heart /> {track?.like}</span>

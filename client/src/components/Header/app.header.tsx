@@ -111,7 +111,7 @@ const AppHeader = () => {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="bg-[#282828] border-none w-[230px]">
                                             <DropdownMenuItem className="flex p-3 hover:!bg-[#3e3e3e] hover:cursor-pointer transition-all">
-                                                <ActiveLink href="/track/upload">
+                                                <ActiveLink href={`/profile/${session?.user?._id ?? session?.user?.pk}`}>
                                                     <div className="text-white w-full text-center text-[14px]">Profile</div>
                                                 </ActiveLink>
                                             </DropdownMenuItem>
@@ -147,25 +147,25 @@ const AppHeader = () => {
 
                                     </DropdownMenu>
                                 ) : (
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger>
-                                            <img
-                                                src={session?.user?.avatar && session?.user?.avatar !== "" ?
-                                                    `${session?.user?.avatar}` :
-                                                    "/avatars-000184820148-9xr49w-t240x240.jpg"}
-                                                onClick={handleProfileMenuOpen}
-                                                className="w-10 h-10 rounded-full cursor-pointer"
-                                                alt="Profile"
-                                            />
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="w-40 bg-[#282828] border-none">
-                                            <ActiveLink href="/playlist"><div className='text-white'>PlayLists</div></ActiveLink>
-                                            <ActiveLink href="/track/upload"><div className='text-white'>Upload</div></ActiveLink>
-                                            <ActiveLink href="/likes"><div className='text-white'>Likes</div></ActiveLink>
-                                            <DropdownMenuItem onClick={() => console.log("Logout clicked")}>Logout</DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                )}
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger>
+                                                <img
+                                                    src={session?.user?.avatar && session?.user?.avatar !== "" ?
+                                                        `${session?.user?.avatar}` :
+                                                        "/avatars-000184820148-9xr49w-t240x240.jpg"}
+                                                    onClick={handleProfileMenuOpen}
+                                                    className="w-10 h-10 rounded-full cursor-pointer"
+                                                    alt="Profile"
+                                                />
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end" className="w-40 bg-[#282828] border-none">
+                                                <ActiveLink href="/playlist"><div className='text-white'>PlayLists</div></ActiveLink>
+                                                <ActiveLink href="/track/upload"><div className='text-white'>Upload</div></ActiveLink>
+                                                <ActiveLink href="/likes"><div className='text-white'>Likes</div></ActiveLink>
+                                                <DropdownMenuItem onClick={() => console.log("Logout clicked")}>Logout</DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    )}
                                 {currentUser?.isPrenium && (
                                     <div>premium</div>
                                 )}
@@ -176,7 +176,7 @@ const AppHeader = () => {
                     <>
                         <section className="flex space-x-4 mr-[35px]">
                             <div className="flex items-center justify-center text-[#b3b3b3] hover:text-white font-bold hover:cursor-pointer transition-all">
-                                <Link href={"/auth/signin"}>Signup</Link>
+                                <Link href={"/auth/signin"}>Sign in</Link>
                             </div>
                             <div className="flex items-center justify-center ">
                                 <Button className="px-[30px] py-[20px] bg-white text-black font-bold hover:bg-[#ddd] rounded-full"><Link href={"/auth/signin"}>Login</Link></Button>
